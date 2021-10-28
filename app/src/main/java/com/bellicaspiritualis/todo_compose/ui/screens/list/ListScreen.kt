@@ -15,7 +15,7 @@ import com.bellicaspiritualis.todo_compose.ui.theme.fabBackgroundColor
 
 @Composable
 fun ListScreen(
-    navigateToTaskScreen: (Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     Scaffold(
         topBar = {
