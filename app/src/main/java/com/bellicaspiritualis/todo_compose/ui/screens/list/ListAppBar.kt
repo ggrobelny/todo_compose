@@ -1,5 +1,6 @@
 package com.bellicaspiritualis.todo_compose.ui.screens.list
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -15,20 +16,25 @@ import com.bellicaspiritualis.todo_compose.R
 import com.bellicaspiritualis.todo_compose.data.models.Priority
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import com.bellicaspiritualis.todo_compose.components.PriorityItem
+import com.bellicaspiritualis.todo_compose.ui.theme.LARGE_PADDING
+import com.bellicaspiritualis.todo_compose.ui.theme.Typography
 
 @Composable
 fun ListAppBar() {
     DefaultListAppBar(
         onSearchClicked = {},
-        onSortClicked = {}
+        onSortClicked = {},
+        onDeleteClicked = {}
     )
 }
 
 @Composable
 fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
-    onSortClicked: (Priority) -> Unit
+    onSortClicked: (Priority) -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -40,7 +46,8 @@ fun DefaultListAppBar(
         actions = {
             ListAppBarActions(
                 onSearchClicked = onSearchClicked,
-                onSortClicked = onSortClicked
+                onSortClicked = onSortClicked,
+                onDeleteClicked = onDeleteClicked
                 )
         },
 
@@ -51,10 +58,12 @@ fun DefaultListAppBar(
 @Composable
 fun ListAppBarActions(
     onSearchClicked: () -> Unit,
-    onSortClicked: (Priority) -> Unit
+    onSortClicked: (Priority) -> Unit,
+    onDeleteClicked: () -> Unit
 ) {
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
+    DeleteAllActions(onDeleteClicked = onDeleteClicked)
 }
 
 @Composable
@@ -115,10 +124,43 @@ fun SortAction(
 }
 
 @Composable
+fun DeleteAllActions(
+    onDeleteClicked: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false)}
+    IconButton(onClick = { expanded = true }) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_more_vert),
+            contentDescription = stringResource(id = R.string.delete_all_action),
+            tint = MaterialTheme.colors.topAppBarContentColor
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        onDeleteClicked()
+                }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(start = LARGE_PADDING),
+                    text = stringResource(id = R.string.delete_all_action),
+                    style = Typography.subtitle2
+                    )
+            }
+        }
+    }
+}
+
+@Composable
 @Preview
 fun DefaultListAppBarPreview() {
     DefaultListAppBar(
         onSearchClicked = {},
-        onSortClicked = {}
+        onSortClicked = {},
+        onDeleteClicked = {}
     )
 }
