@@ -78,7 +78,8 @@ fun SortAction(
     IconButton(onClick = { expanded = true }) {
         Icon(
             painter = painterResource(id = R.drawable.ic_filter_list),
-            contentDescription = stringResource(id = R.string.sort_action)
+            contentDescription = stringResource(id = R.string.sort_action),
+            tint = MaterialTheme.colors.topAppBarContentColor
         )
         DropdownMenu(
             expanded = expanded,
