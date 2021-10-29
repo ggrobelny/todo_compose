@@ -28,6 +28,7 @@ import com.bellicaspiritualis.todo_compose.components.PriorityItem
 import com.bellicaspiritualis.todo_compose.ui.theme.*
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
 import com.bellicaspiritualis.todo_compose.util.SearchAppBarState
+import com.bellicaspiritualis.todo_compose.util.TrailingIconState
 
 @Composable
 fun ListAppBar(
@@ -47,9 +48,16 @@ fun ListAppBar(
             )
         }
         else -> {
-            SearchAppBar(text = "Search",
-                onTextChange = {},
-                onCloseClicked = {},
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = { newText ->
+                    sharedViewModel.searchTextState.value = newText
+                },
+                onCloseClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
                 onSearchClicked = {}
             )
         }
@@ -188,6 +196,10 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
+    var trailingIconState by remember { mutableStateOf(
+        TrailingIconState.READY_TO_DELETE)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -230,7 +242,20 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        onCloseClicked()
+                        when(trailingIconState) {
+                            TrailingIconState.READY_TO_DELETE -> {
+                                onTextChange("")
+                                trailingIconState = TrailingIconState.READY_TO_CLOSE
+                            }
+                            TrailingIconState.READY_TO_CLOSE -> {
+                                if (text.isNotEmpty()) {
+                                    onTextChange("")
+                                } else {
+                                    onCloseClicked()
+                                    trailingIconState = TrailingIconState.READY_TO_DELETE
+                                }
+                            }
+                        }
                     }
                 ) {
                     Icon(
