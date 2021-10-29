@@ -26,19 +26,34 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import com.bellicaspiritualis.todo_compose.components.PriorityItem
 import com.bellicaspiritualis.todo_compose.ui.theme.*
+import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
+import com.bellicaspiritualis.todo_compose.util.SearchAppBarState
 
 @Composable
-fun ListAppBar() {
-//    DefaultListAppBar(
-//        onSearchClicked = {},
-//        onSortClicked = {},
-//        onDeleteClicked = {}
-//    )
-    SearchAppBar(text = "Search",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {}
-    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState: String
+) {
+    when(searchAppBarState) {
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.OPENED
+                },
+                onSortClicked = {},
+                onDeleteClicked = {}
+            )
+        }
+        else -> {
+            SearchAppBar(text = "Search",
+                onTextChange = {},
+                onCloseClicked = {},
+                onSearchClicked = {}
+            )
+        }
+    }
 }
 
 @Composable
