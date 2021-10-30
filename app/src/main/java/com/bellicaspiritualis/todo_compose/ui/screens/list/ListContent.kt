@@ -1,16 +1,18 @@
 package com.bellicaspiritualis.todo_compose.ui.screens.list
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
-import com.bellicaspiritualis.todo_compose.ui.theme.TASK_ITEM_ELEVATION
-import com.bellicaspiritualis.todo_compose.ui.theme.taskItemBackgroundColor
+import com.bellicaspiritualis.todo_compose.ui.theme.*
 
 @Composable
 fun ListContent() {
@@ -32,8 +34,38 @@ fun TaskItem(
             navigateToTaskScreen(todoTask.id)
         }
     ) {
-        Column() {
-            
+        Column(
+            modifier = Modifier
+                .padding(all = LARGE_PADDING)
+                .fillMaxWidth()
+        ) {
+            Row {
+                Text(
+                    text = todoTask.title,
+                    color = MaterialTheme.colors.taskItemTextColor,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
+                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Canvas(modifier = Modifier
+                        .width(PRIORITY_INDICATOR_SIZE)
+                        .height(PRIORITY_INDICATOR_SIZE)
+                    ) {
+                        drawCircle(
+                            color = todoTask.priority.color
+                        )
+                    }
+                }
+            }
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = todoTask.description,
+                color = MaterialTheme.colors.taskItemTextColor,
+                style = MaterialTheme.typography.subtitle1,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
         }
     }
 }
