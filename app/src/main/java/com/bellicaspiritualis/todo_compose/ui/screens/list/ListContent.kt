@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import com.bellicaspiritualis.todo_compose.data.models.Priority
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.ui.theme.*
 
@@ -68,4 +70,16 @@ fun TaskItem(
             )
         }
     }
+}
+
+@ExperimentalMaterialApi
+@Composable
+@Preview
+fun TaskItemPreview() {
+    TaskItem(todoTask = ToDoTask(
+        id = 0,
+        title = "Title",
+        description = "Quis ut Deus",
+        priority = Priority.HIGH
+    ), navigateToTaskScreen = {})
 }
