@@ -2,6 +2,8 @@ package com.bellicaspiritualis.todo_compose.ui.screens.list
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,8 +19,24 @@ import com.bellicaspiritualis.todo_compose.data.models.Priority
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.ui.theme.*
 
+@ExperimentalMaterialApi
 @Composable
-fun ListContent() {
+fun ListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn{
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            TaskItem(
+                todoTask = task,
+                navigateToTaskScreen = navigateToTaskScreen)
+        }
+    }
 }
 
 @ExperimentalMaterialApi
@@ -52,8 +70,8 @@ fun TaskItem(
                     maxLines = 1
                 )
                 Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                    .fillMaxWidth()
+                    .weight(1f),
                     contentAlignment = Alignment.TopEnd
                 ) {
                     Canvas(modifier = Modifier
