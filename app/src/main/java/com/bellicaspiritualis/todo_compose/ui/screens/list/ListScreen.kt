@@ -1,6 +1,5 @@
 package com.bellicaspiritualis.todo_compose.ui.screens.list
 
-import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -10,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.bellicaspiritualis.todo_compose.R
 import com.bellicaspiritualis.todo_compose.ui.theme.fabBackgroundColor
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
@@ -64,7 +62,8 @@ fun ListFab(
         },
         backgroundColor = MaterialTheme.colors.fabBackgroundColor
     ) {
-        Icon(imageVector = Icons.Filled.Add,
+        Icon(
+            imageVector = Icons.Filled.Add,
             contentDescription = stringResource(
                 id = R.string.add_button
             ),
