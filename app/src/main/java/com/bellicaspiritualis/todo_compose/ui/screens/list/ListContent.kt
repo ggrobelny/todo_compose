@@ -18,10 +18,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bellicaspiritualis.todo_compose.data.models.Priority
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.ui.theme.*
+import com.bellicaspiritualis.todo_compose.util.RequestState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
+    tasks: RequestState<List<ToDoTask>>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks is RequestState.Success) {
+        if (tasks.data.isEmpty()) {
+            EmptyContent()
+        } else {
+            DisplayTasks(
+                tasks = tasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun DisplayTasks(
     tasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
@@ -97,6 +116,7 @@ fun TaskItem(
         }
     }
 }
+
 
 @ExperimentalMaterialApi
 @Composable

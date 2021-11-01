@@ -23,14 +23,10 @@ fun ListScreen(
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
-        //Log.d("ListScreen", "LaunchedEffect Triggered")
         sharedViewModel.getAllTasks()
     }
 
     val allTasks by sharedViewModel.allTasks.collectAsState()
-//    for(task in allTasks.value) {
-//        Log.d("ListScreen", task.title)
-//    }
 
     val searchAppBarState: SearchAppBarState
         by sharedViewModel.searchAppBarState
