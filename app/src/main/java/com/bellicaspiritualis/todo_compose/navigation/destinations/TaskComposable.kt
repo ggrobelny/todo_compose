@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
+import com.bellicaspiritualis.todo_compose.ui.screens.task.TaskScreen
 import com.bellicaspiritualis.todo_compose.util.Action
 import com.bellicaspiritualis.todo_compose.util.Constants.TASK_ARGUMENT_KEY
 import com.bellicaspiritualis.todo_compose.util.Constants.TASK_SCREEN
@@ -20,5 +21,7 @@ fun NavGraphBuilder.taskComposable(
     ) { navBackStackEntry ->
         val taskId = navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
         Log.d("TaskComposable", taskId.toString())
+        
+        TaskScreen(navigationToListScreen = navigateToListScreen)
     }
 }

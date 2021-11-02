@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.bellicaspiritualis.todo_compose.R
 import com.bellicaspiritualis.todo_compose.ui.theme.fabBackgroundColor
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
@@ -71,3 +72,10 @@ fun ListFab(
         )
     }
 }
+
+//@ExperimentalMaterialApi
+//@Composable
+//@Preview
+//private fun ListScreenPreview() {
+//    ListScreen(navigateToTaskScreen = {})
+//}
