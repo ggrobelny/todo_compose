@@ -1,6 +1,5 @@
 package com.bellicaspiritualis.todo_compose.ui.viewmodels
 
-import android.util.Log.e
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.bellicaspiritualis.todo_compose.data.models.Priority
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.data.repositories.ToDoRepository
+import com.bellicaspiritualis.todo_compose.util.Action
 import com.bellicaspiritualis.todo_compose.util.Constants.MAX_LENGTH_TITLE
 import com.bellicaspiritualis.todo_compose.util.RequestState
 import com.bellicaspiritualis.todo_compose.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -24,9 +25,12 @@ class SharedViewModel @Inject constructor(
     private val repository: ToDoRepository
 ): ViewModel(){
 
+    val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
+
     val id: MutableState<Int> = mutableStateOf(0)
     val title: MutableState<String> = mutableStateOf("")
     val description: MutableState<String> = mutableStateOf("")
+
     val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
 
     val searchAppBarState: MutableState<SearchAppBarState> =
@@ -60,6 +64,41 @@ class SharedViewModel @Inject constructor(
                 _selectedTask.value = task
             }
         }
+    }
+
+    private fun addTask() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val toDoTask = ToDoTask(
+                title = title.value,
+                description = description.value,
+                priority = priority.value
+            )
+            repository.addTask(toDoTask = toDoTask)
+        }
+    }
+
+    fun handleDatabaseActions(action: Action) {
+        when(action) {
+            Action.ADD -> {
+                addTask()
+            }
+            Action.UPDATE -> {
+
+            }
+            Action.DELETE -> {
+
+            }
+            Action.DELETE_ALL -> {
+
+            }
+            Action.UNDO -> {
+
+            }
+            else -> {
+
+            }
+        }
+        this.action.value = Action.NO_ACTION
     }
 
     fun updateTaskFields(selectedTask: ToDoTask?) {

@@ -9,7 +9,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.bellicaspiritualis.todo_compose.R
 import com.bellicaspiritualis.todo_compose.ui.theme.fabBackgroundColor
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
@@ -25,6 +24,8 @@ fun ListScreen(
         sharedViewModel.getAllTasks()
     }
 
+    val action by sharedViewModel.action
+
     val allTasks by sharedViewModel.allTasks.collectAsState()
 
     val searchAppBarState: SearchAppBarState
@@ -32,6 +33,8 @@ fun ListScreen(
 
     val searchTextState: String
         by sharedViewModel.searchTextState
+
+    sharedViewModel.handleDatabaseActions(action = action)
 
     Scaffold(
         topBar = {
