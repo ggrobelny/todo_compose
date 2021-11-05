@@ -62,7 +62,7 @@ fun TaskScreen(
 fun displayToast(context: Context) {
     Toast.makeText(
         context,
-        "Fields empty.",
+        "Fields cannot be empty.",
         Toast.LENGTH_SHORT
     ).show()
 }
