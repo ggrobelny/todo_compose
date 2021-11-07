@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.ImeAction
 import com.bellicaspiritualis.todo_compose.components.PriorityItem
 import com.bellicaspiritualis.todo_compose.ui.theme.*
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
+import com.bellicaspiritualis.todo_compose.util.Action
 import com.bellicaspiritualis.todo_compose.util.SearchAppBarState
 import com.bellicaspiritualis.todo_compose.util.TrailingIconState
 
@@ -43,9 +44,10 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value =
                         SearchAppBarState.OPENED
                 },
-                onSortClicked = {},
-                onDeleteClicked = {}
-            )
+                onSortClicked = {}
+            ) {
+                sharedViewModel.action.value = Action.DELETE_ALL
+            }
         }
         else -> {
             SearchAppBar(
@@ -70,7 +72,7 @@ fun ListAppBar(
 fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -83,7 +85,7 @@ fun DefaultListAppBar(
             ListAppBarActions(
                 onSearchClicked = onSearchClicked,
                 onSortClicked = onSortClicked,
-                onDeleteClicked = onDeleteClicked
+                onDeleteAllClicked = onDeleteAllClicked
                 )
         },
 
@@ -95,11 +97,11 @@ fun DefaultListAppBar(
 fun ListAppBarActions(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllActions(onDeleteClicked = onDeleteClicked)
+    DeleteAllActions(onDeleteAllClicked = onDeleteAllClicked)
 }
 
 @Composable
@@ -161,7 +163,7 @@ fun SortAction(
 
 @Composable
 fun DeleteAllActions(
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false)}
     IconButton(onClick = { expanded = true }) {
@@ -177,7 +179,7 @@ fun DeleteAllActions(
             DropdownMenuItem(
                     onClick = {
                         expanded = false
-                        onDeleteClicked()
+                        onDeleteAllClicked()
                 }
             ) {
                 Text(
@@ -291,9 +293,8 @@ fun SearchAppBar(
 fun DefaultListAppBarPreview() {
     DefaultListAppBar(
         onSearchClicked = {},
-        onSortClicked = {},
-        onDeleteClicked = {}
-    )
+        onSortClicked = {}
+    ) {}
 }
 
 @Composable
