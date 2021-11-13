@@ -1,5 +1,6 @@
 package com.bellicaspiritualis.todo_compose.ui.screens.list
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -13,7 +14,9 @@ import com.bellicaspiritualis.todo_compose.util.Action
 import com.bellicaspiritualis.todo_compose.util.SearchAppBarState
 import kotlinx.coroutines.launch
 
+
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
@@ -61,6 +64,11 @@ fun ListScreen(
                 highPriorityTasks = highPriorityTasks,
                 sortState = sortState,
                 searchAppBarState = searchAppBarState,
+                onSwipeToDelete = { action, task ->
+                    sharedViewModel.action.value = action
+                    sharedViewModel.updateTaskFields(selectedTask = task)
+                    scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
+                },
                 navigateToTaskScreen = navigateToTaskScreen
             )
         },
