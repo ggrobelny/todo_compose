@@ -1,5 +1,6 @@
 package com.bellicaspiritualis.todo_compose.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -11,6 +12,7 @@ import com.bellicaspiritualis.todo_compose.navigation.destinations.taskComposabl
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
 import com.bellicaspiritualis.todo_compose.util.Constants.LIST_SCREEN
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun SetupNavigation (
