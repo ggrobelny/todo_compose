@@ -18,7 +18,7 @@ val Malina = Color(0xFFA02146)
 
 val LowPriorityColor = Color(0xFF00C980)
 val MediumPriorityColor = Color(0xFFFFC114)
-val HighPriorityColor = Color(0xFFF44336)
+val HighPriorityColor = Color(0xFFF7336C)
 val NonePriorityColor = Color(0xFF7C7C7C)
 
 val Colors.taskItemTextColor: Color
