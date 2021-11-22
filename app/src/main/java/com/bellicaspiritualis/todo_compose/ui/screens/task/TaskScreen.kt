@@ -2,14 +2,16 @@ package com.bellicaspiritualis.todo_compose.ui.screens.task
 
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import com.bellicaspiritualis.todo_compose.data.models.Priority
 import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
 import com.bellicaspiritualis.todo_compose.util.Action
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.runtime.*
 
 @Composable
 fun TaskScreen(
@@ -22,6 +24,8 @@ fun TaskScreen(
     val priority: Priority by sharedViewModel.priority
 
     val context = LocalContext.current
+
+    BackHandler(onBackPressed = { navigationToListScreen(Action.NO_ACTION) })
     
     Scaffold(
         topBar = {
@@ -65,4 +69,29 @@ fun displayToast(context: Context) {
         "Fields cannot be empty.",
         Toast.LENGTH_SHORT
     ).show()
+}
+
+@Composable
+fun BackHandler(
+    backDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+
+    DisposableEffect(key1 = backDispatcher) {
+        backDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
+        }
+    }
 }
