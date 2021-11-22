@@ -31,7 +31,7 @@ val Colors.taskItemBackgroundColor: Color
 
 val Colors.fabBackgroundColor: Color
     @Composable
-    get() = if(isLight) Zloty else Zloty
+    get() = if(isLight) Malina else Malina
 
 val Colors.topAppBarContentColor: Color
     @Composable
