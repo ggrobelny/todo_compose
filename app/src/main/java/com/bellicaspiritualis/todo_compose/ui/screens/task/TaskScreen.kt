@@ -10,6 +10,7 @@ import com.bellicaspiritualis.todo_compose.data.models.ToDoTask
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
 import com.bellicaspiritualis.todo_compose.util.Action
 import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.runtime.*
 
@@ -25,8 +26,11 @@ fun TaskScreen(
 
     val context = LocalContext.current
 
-    BackHandler(onBackPressed = { navigationToListScreen(Action.NO_ACTION) })
-    
+//    BackHandler(onBackPressed = { navigationToListScreen(Action.NO_ACTION) })
+    BackHandler {
+        navigationToListScreen(Action.NO_ACTION)
+    }
+
     Scaffold(
         topBar = {
             TaskAppBar(
@@ -71,27 +75,27 @@ fun displayToast(context: Context) {
     ).show()
 }
 
-@Composable
-fun BackHandler(
-    backDispatcher: OnBackPressedDispatcher? =
-        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
-    onBackPressed: () -> Unit
-) {
-    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
-
-    val backCallback = remember {
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                currentOnBackPressed()
-            }
-        }
-    }
-
-    DisposableEffect(key1 = backDispatcher) {
-        backDispatcher?.addCallback(backCallback)
-
-        onDispose {
-            backCallback.remove()
-        }
-    }
-}
+//@Composable
+//fun BackHandler(
+//    backDispatcher: OnBackPressedDispatcher? =
+//        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+//    onBackPressed: () -> Unit
+//) {
+//    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+//
+//    val backCallback = remember {
+//        object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                currentOnBackPressed()
+//            }
+//        }
+//    }
+//
+//    DisposableEffect(key1 = backDispatcher) {
+//        backDispatcher?.addCallback(backCallback)
+//
+//        onDispose {
+//            backCallback.remove()
+//        }
+//    }
+//}
