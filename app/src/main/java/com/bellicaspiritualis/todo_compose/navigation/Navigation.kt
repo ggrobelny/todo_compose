@@ -8,9 +8,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.bellicaspiritualis.todo_compose.navigation.destinations.listComposable
+import com.bellicaspiritualis.todo_compose.navigation.destinations.splashComposable
 import com.bellicaspiritualis.todo_compose.navigation.destinations.taskComposable
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
 import com.bellicaspiritualis.todo_compose.util.Constants.LIST_SCREEN
+import com.bellicaspiritualis.todo_compose.util.Constants.SPLASH_SCREEN
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -25,15 +27,18 @@ fun SetupNavigation (
 
     NavHost(
         navController = navController,
-        startDestination = LIST_SCREEN
+        startDestination = SPLASH_SCREEN
     ) {
+        splashComposable(
+            navigateToListScreen = screen.splash
+        )
         listComposable(
-            navigateToTaskScreen = screen.task,
+            navigateToTaskScreen = screen.list,
             sharedViewModel = sharedViewModel
         )
 
         taskComposable (
-            navigateToListScreen = screen.list,
+            navigateToListScreen = screen.task,
             sharedViewModel = sharedViewModel
         )
     }
