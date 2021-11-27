@@ -4,15 +4,13 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
 import com.bellicaspiritualis.todo_compose.navigation.destinations.listComposable
 import com.bellicaspiritualis.todo_compose.navigation.destinations.splashComposable
 import com.bellicaspiritualis.todo_compose.navigation.destinations.taskComposable
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel
-import com.bellicaspiritualis.todo_compose.util.Constants.LIST_SCREEN
 import com.bellicaspiritualis.todo_compose.util.Constants.SPLASH_SCREEN
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -25,7 +23,7 @@ fun SetupNavigation (
         Screens(navController = navController)
     }
 
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = SPLASH_SCREEN
     ) {
