@@ -9,7 +9,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import androidx.navigation.navArgument
 import com.bellicaspiritualis.todo_compose.ui.screens.list.ListScreen
 import com.bellicaspiritualis.todo_compose.ui.viewmodels.SharedViewModel

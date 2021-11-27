@@ -16,5 +16,5 @@ object Constants {
 
     const val MAX_LENGTH_TITLE = 45
 
-    const val SPLASH_SCREEN_DELAY = 2000L
+    const val SPLASH_SCREEN_DELAY = 1200L
 }
